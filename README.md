@@ -32,13 +32,13 @@ Web application to view and add recipes
 
 Recipe Book provides the following API endpoints for interacting with the server-side:
 
-GET /recipes: Retrieves all recipes. Supports filtering using name and category.
-GET /recipes/{id}: Retrieves a specific recipe by its ID.
-POST /recipes: Adds a new recipe.
-GET /recipes/categories/{id}: Retrieves recipes belonging to a specific category by its ID.
-GET /categories: Retrieves all categories.
-GET /categories/{id}: Retrieves a specific category by its ID.
-GET /categories/{id}/recipes: Retrieves recipes belonging to a specific category by its ID.
+- GET /recipes: Retrieves all recipes. Supports filtering using name and category.
+- GET /recipes/{id}: Retrieves a specific recipe by its ID.
+- POST /recipes: Adds a new recipe.
+- GET /recipes/categories/{id}: Retrieves recipes belonging to a specific category by its ID.
+- GET /categories: Retrieves all categories.
+- GET /categories/{id}: Retrieves a specific category by its ID.
+- GET /categories/{id}/recipes: Retrieves recipes belonging to a specific category by its ID.
 
 ## Data:
 Sample example of Recipe data object:
