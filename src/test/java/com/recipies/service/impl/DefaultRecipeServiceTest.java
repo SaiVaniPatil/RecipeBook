@@ -2,8 +2,11 @@ package com.recipies.service.impl;
 
 import com.recipies.exception.ElementNotFoundException;
 import com.recipies.exception.ElementWithSameNameAlreadyExistsException;
+import com.recipies.exception.InvalidInputException;
 import com.recipies.model.Category;
 import com.recipies.model.Recipe;
+import com.recipies.model.RecipeDirections;
+import com.recipies.model.RecipeIngredients;
 import com.recipies.repository.CategoryRepository;
 import com.recipies.repository.RecipeRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,9 +16,12 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
+import java.lang.reflect.Executable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -146,12 +152,36 @@ class DefaultRecipeServiceTest {
 	}
 
 	@Test
+	void saveRecipeInvalidInput() {
+		
+		  Recipe recipe = new Recipe(101L, "Recipe1", "6");	
+		
+		 assertThrows(InvalidInputException.class, ()-> recipeService.saveRecipe(recipe) );	
+	
+			
+		
+	}
+	
+	@Test
 	void saveRecipe() {
 
 		Recipe recipe = new Recipe(101L, "Recipe1", "6");
+		recipe.addCategory(new Category(20L,"test"));
+		RecipeIngredients rig = new RecipeIngredients();
+		rig.setItem("tomato");
+		RecipeDirections rd = new RecipeDirections();
+		rd.setStep("test");
+		
+		
+		Set<RecipeIngredients> rigSet =new HashSet<RecipeIngredients>();
+		rigSet.add(rig);
+		
+		Set<RecipeDirections> rdSet =new HashSet<RecipeDirections>();
+		rdSet.add(rd);		
+		
+		recipe.setRecipeIngredients(rigSet);
+		recipe.setRecipeDirectons(rdSet);
 		when(recipeRepository.save(recipe)).thenReturn(recipe);
-
-		Recipe result = recipeService.saveRecipe(recipe);
-		assertEquals(recipe.getName(), result.getName());
+		assertEquals("Recipe1",  recipeService.saveRecipe(recipe).getName());
 	}
 }
